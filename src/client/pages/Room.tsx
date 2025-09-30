@@ -10,7 +10,10 @@ import {
 import { useParams } from 'react-router-dom'
 import { ReactNode, useEffect, useState } from 'react'
 
-const WORKER_URL = import.meta.env.VITE_WORKER_URL ?? 'http://localhost:5858';
+let WORKER_URL = import.meta.env.VITE_WORKER_URL ?? 'http://localhost:5858';
+if(import.meta.env.MODE === 'production') {
+    WORKER_URL = window.location.origin;
+}
 
 // In this example, the room ID is hard-coded. You can set this however you like though.
 const roomId = 'test-room'
