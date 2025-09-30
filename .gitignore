@@ -1,0 +1,5 @@
+.rooms/
+.assets/
+.yarn
+node_modules/
+compose.mine.yaml

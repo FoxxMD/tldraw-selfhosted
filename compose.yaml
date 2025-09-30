@@ -1,0 +1,14 @@
+services:
+  tldraw:
+    image: tldraw
+    build: .
+    ports:
+      - 5757:5757
+      - 5858:5858
+    ## behind a reverse proxy the backend URL needs to be set so the client code
+    ## knows where to communicate to
+    ##
+    ## URL should lead to port 5858 on this container
+    ##
+    # environment:
+    #   - VITE_WORKER_URL=mydomain-ws.com

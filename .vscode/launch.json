@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "dev",
+            "type": "node",
+            "request": "launch",
+            // Debug app in VSCode
+            "program": "${workspaceFolder}/src/server/server.node.ts",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/tsx",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "<node_internals>/**",
+                // Ignore all dependencies (optional)
+                "${workspaceFolder}/node_modules/**",
+            ],
+        }
+    ]
+}
