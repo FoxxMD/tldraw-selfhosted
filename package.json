@@ -15,6 +15,7 @@
 		"dev-bun": "concurrently -n server,client -c red,blue \"yarn dev-server-bun\" \"yarn dev-client\"",
 		"dev-server-node": "yarn run -T tsx watch ./src/server/server.node.ts",
 		"dev-server-bun": "npx bun --watch ./src/server/server.bun.ts",
+		"build": "tsc",
 		"dev-client": "vite dev --host",
 		"test-ci": "echo 'No tests yet'",
 		"test": "yarn run -T vitest run --passWithNoTests",
