@@ -21,7 +21,7 @@ export function Room() {
     // Create a store connected to multiplayer.
     const store = useSync({
         // We need to know the websocket's URI...
-        uri: `${WORKER_URL}/connect/${roomId}`,
+        uri: `${WORKER_URL}/api/connect/${roomId}`,
         // ...and how to handle static assets like images & videos
         assets: multiplayerAssets,
     })
@@ -83,7 +83,7 @@ const multiplayerAssets: TLAssetStore = {
         const id = uniqueId()
 
         const objectName = `${id}-${file.name}`
-        const url = `${WORKER_URL}/uploads/${encodeURIComponent(objectName)}`
+        const url = `${WORKER_URL}/api/uploads/${encodeURIComponent(objectName)}`
 
         const response = await fetch(url, {
             method: 'PUT',
@@ -120,7 +120,7 @@ async function unfurlBookmarkUrl({ url }: { url: string }): Promise<TLBookmarkAs
     }
 
     try {
-        const response = await fetch(`${WORKER_URL}/unfurl?url=${encodeURIComponent(url)}`)
+        const response = await fetch(`${WORKER_URL}/api/unfurl?url=${encodeURIComponent(url)}`)
         const data = await response.json()
 
         asset.props.description = data?.description ?? ''

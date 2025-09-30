@@ -13,4 +13,10 @@ export default defineConfig(() => ({
 	optimizeDeps: {
 		exclude: ['@tldraw/assets'],
 	},
+	build: {
+    emptyOutDir: true,
+    // Forces Vite to use a top-level dist folder,
+    // outside the project root defined above
+    outDir: path.join(__dirname, 'dist', 'client'),
+  },
 }))

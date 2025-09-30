@@ -1,10 +1,12 @@
 import cors from '@fastify/cors'
 import websocketPlugin from '@fastify/websocket'
 import fastify from 'fastify'
+import path from 'node:path';
+import ServeStatic from '@fastify/static';
 import type { RawData } from 'ws'
-import { loadAsset, storeAsset } from './assets'
-import { makeOrLoadRoom } from './rooms'
-import { unfurl } from './unfurl'
+import { loadAsset, storeAsset } from './assets.js'
+import { makeOrLoadRoom } from './rooms.js'
+import { unfurl } from './unfurl.js'
 
 const PORT = 5858
 
@@ -12,11 +14,19 @@ const PORT = 5858
 // To keep things simple we're skipping normal production concerns like rate limiting and input validation.
 const app = fastify()
 app.register(websocketPlugin)
-app.register(cors, { origin: '*' })
+app.register(cors, { origin: '*' });
+
+if(process.env.NODE_ENV === 'production') {
+	app.register(ServeStatic, {
+		root: path.resolve(import.meta.dirname, '..', '..', 'client', 'assets'),
+		prefix: '/assets/'
+	});
+}
+
 
 app.register(async (app) => {
 	// This is the main entrypoint for the multiplayer sync
-	app.get('/connect/:roomId', { websocket: true }, async (socket, req) => {
+	app.get('/api/connect/:roomId', { websocket: true }, async (socket, req) => {
 		// The roomId comes from the URL pathname
 		const roomId = (req.params as any).roomId as string
 		// The sessionId is passed from the client as a query param,
@@ -52,23 +62,32 @@ app.register(async (app) => {
 	// To enable blob storage for assets, we add a simple endpoint supporting PUT and GET requests
 	// But first we need to allow all content types with no parsing, so we can handle raw data
 	app.addContentTypeParser('*', (_, __, done) => done(null))
-	app.put('/uploads/:id', {}, async (req, res) => {
+	app.put('/api/uploads/:id', {}, async (req, res) => {
 		const id = (req.params as any).id as string
 		await storeAsset(id, req.raw)
 		res.send({ ok: true })
 	})
-	app.get('/uploads/:id', async (req, res) => {
+	app.get('/api/uploads/:id', async (req, res) => {
 		const id = (req.params as any).id as string
 		const data = await loadAsset(id)
 		res.send(data)
 	})
 
 	// To enable unfurling of bookmarks, we add a simple endpoint that takes a URL query param
-	app.get('/unfurl', async (req, res) => {
+	app.get('/api/unfurl', async (req, res) => {
 		const url = (req.query as any).url as string
 		res.send(await unfurl(url))
-	})
-})
+	});
+
+	if(process.env.NODE_ENV === 'production') {
+		app.setNotFoundHandler((req, res) => {
+			res.sendFile('index.html', path.resolve(import.meta.dirname, '..', '..', 'client'))
+	});
+		// app.get('/path/with/different/root', function (req, reply) {
+		// 	reply.sendFile('index.html', path.resolve(import.meta.dirname, '..', '..', 'client')) // serving a file from a different root location
+		// });
+	}
+});
 
 app.listen({ port: PORT, host: '0.0.0.0' }, (err) => {
 	if (err) {

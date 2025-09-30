@@ -3,6 +3,7 @@
 	"description": "tldraw infinite canvas SDK (example node/bun servers).",
 	"version": "0.0.0",
 	"private": true,
+	"type": "module",
 	"author": {
 		"name": "tldraw GB Ltd.",
 		"email": "hello@tldraw.com"
@@ -15,9 +16,12 @@
 		"dev-bun": "concurrently -n server,client -c red,blue \"yarn dev-server-bun\" \"yarn dev-client\"",
 		"dev-server-node": "yarn run -T tsx watch ./src/server/server.node.ts",
 		"dev-server-bun": "npx bun --watch ./src/server/server.bun.ts",
-		"build": "tsc",
+		"build": "yarn run build:server && yarn build:client",
 		"dev-client": "vite dev --host",
 		"test-ci": "echo 'No tests yet'",
+		"build:server": "tsc",
+		"build:client": "vite build --app",
+		"prod": "NODE_ENV=production node dist/src/server/server.node.js",
 		"test": "yarn run -T vitest run --passWithNoTests",
 		"test-coverage": "lazy inherit",
 		"lint": "yarn run -T tsx ../../internal/scripts/lint.ts"
@@ -34,12 +38,13 @@
 		"typescript": "^5.8.3"
 	},
 	"dependencies": {
-		"@fastify/cors": "^9.0.1",
-		"@fastify/websocket": "^10.0.1",
+		"@fastify/cors": "^11.0.1",
+		"@fastify/static": "^8.2.0",
+		"@fastify/websocket": "^11.0.1",
 		"@tldraw/sync": "4.0.2",
 		"@tldraw/sync-core": "4.0.2",
 		"@vitejs/plugin-react-swc": "^3.10.2",
-		"fastify": "^4.28.1",
+		"fastify": "5.4.0",
 		"itty-router": "^5.0.18",
 		"react": "^18.3.1",
 		"react-dom": "^18.3.1",
