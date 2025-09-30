@@ -2,3 +2,4 @@ node_modules/
 .rooms/
 .assets/
 .yarn
+dist

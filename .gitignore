@@ -3,3 +3,4 @@
 .yarn
 node_modules/
 compose.mine.yaml
+dist
