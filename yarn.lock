@@ -1463,6 +1463,13 @@
     "@tiptap/extension-text-style" "^2.26.1"
     "@tiptap/pm" "^2.26.1"
 
+"@tldraw/assets@^4.0.2":
+  version "4.0.2"
+  resolved "https://registry.yarnpkg.com/@tldraw/assets/-/assets-4.0.2.tgz#7344c3a6e8ee33c48645a7a7fb1bc681f78c13ba"
+  integrity sha512-vA7M8V47iUqC7CMIezKtNLk4jP3y5a7FBOz9B4MEIkTAQ+Qqm/NHz8CALgtFdMqDthcFo7ltGrgFyIoxsfrZXQ==
+  dependencies:
+    "@tldraw/utils" "4.0.2"
+
 "@tldraw/editor@4.0.2":
   version "4.0.2"
   resolved "https://registry.yarnpkg.com/@tldraw/editor/-/editor-4.0.2.tgz#d350e78471acb246b9a42f73019115980e4f7fb2"

@@ -7,8 +7,11 @@ import {
     Tldraw,
     uniqueId,
 } from 'tldraw'
+import {getAssetUrlsByMetaUrl} from '@tldraw/assets/urls'
 import { useParams } from 'react-router-dom'
 import { ReactNode, useEffect, useState } from 'react'
+
+const assetUrls = getAssetUrlsByMetaUrl();
 
 let WORKER_URL = import.meta.env.VITE_WORKER_URL ?? 'http://localhost:5858';
 if(import.meta.env.MODE === 'production') {
@@ -35,6 +38,7 @@ export function Room() {
                 // we can pass the connected store into the Tldraw component which will handle
                 // loading states & enable multiplayer UX like cursors & a presence menu
                 store={store}
+                assetUrls={assetUrls}
                 deepLinks
                 onMount={(editor) => {
                     // @ts-expect-error
