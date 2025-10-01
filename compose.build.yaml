@@ -1,6 +1,10 @@
 services:
   tldraw:
-    image: docker.io/foxxmd/tldraw:latest
+    image: tldraw
+    build:
+      context: .
+      args:
+        VITE_TLDRAW_LICENSE_KEY:
     ports:
       - 5858:5858
     volumes:
