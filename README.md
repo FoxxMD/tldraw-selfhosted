@@ -17,9 +17,7 @@ When deployed on `localhost`, or when developing, this implementation is usable.
 
 If you deploy this to a valid TLD (`mydomain.com`) **you will need to provide a [license](https://tldraw.dev/community/license).** Hobby licenses, which are free, are available with application.
 
-To include your license you will need to build the image yourself.
-
-TODO: Add the build-arg `VITE_TLDRAW_LICENSE_KEY` or fill in using compose.yaml, then build.
+To include your license you will need to build the image yourself: Add the build-arg `VITE_TLDRAW_LICENSE_KEY` or fill in using compose.yaml, then build.
 
 ## License
 

@@ -14,6 +14,9 @@ FROM deps as builder
 
 COPY --chown=node:node . /usr/src/app
 
+ARG VITE_TLDRAW_LICENSE_KEY
+ENV VITE_TLDRAW_LICENSE_KEY=${VITE_TLDRAW_LICENSE_KEY}
+
 RUN yarn build
 
 FROM deps as prod-deps
